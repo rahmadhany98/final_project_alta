@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"expense-manager/config"
+	"expense-manager/route"
+)
+
+//controller
 
 func main() {
-	fmt.Println("Hello")
+
+	config.InitDB()
+
+	e := route.New()
+	e.Start(":8080")
 }
