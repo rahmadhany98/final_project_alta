@@ -36,11 +36,20 @@ func LoginUserController(e echo.Context) error {
 	})
 }
 
-func HelloController(e echo.Context) error {
-	id := ReturnID(e)
+func CreateUserController(e echo.Context) error {
+
+	user := model.User{}
+	e.Bind(&user)
+
+	err := config.DB.Save(&user).Error
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
-		"massage": "Authorized",
-		"id":      id,
+		"message": "success",
+		"user":    user,
 	})
 }
